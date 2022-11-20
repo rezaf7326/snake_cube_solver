@@ -1,0 +1,2 @@
+gimulator-py==0.1.10
+matplotlib~=3.6.2
