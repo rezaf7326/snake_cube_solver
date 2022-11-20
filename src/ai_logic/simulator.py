@@ -1,6 +1,6 @@
-from space import Space3D
-from cube import Cube
-from action import Direction
+from src.game_environment.space import Space3D
+from src.game_environment.cube import Cube
+from src.game_environment.action import Direction
 
 
 class Simulator:

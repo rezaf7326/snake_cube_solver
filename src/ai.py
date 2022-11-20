@@ -1,6 +1,6 @@
 import json
-from src.logic.simulator import Simulator
-from src.logic.algorithm import BFS
+from src.ai_logic.simulator import Simulator
+from src.ai_logic.algorithm import BFS
 
 
 class Agent:
@@ -15,7 +15,7 @@ class Agent:
     # the first number is the joint number (1: the first joint)
     # the second number is the axis number (0: x-axis, 1: y-axis, 2: z-axis)
     # the third number is the degree (1: 90 degree, -2: -180 degree, -1000: -90000 degree)
-    def act(self, percept):
+    def act(self, percept):  # TODO integrate with the new input/output
         # ^^^ DO NOT change the act function above ***
 
         sensor_data = json.loads(percept)

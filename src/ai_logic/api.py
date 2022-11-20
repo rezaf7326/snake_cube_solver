@@ -1,6 +1,6 @@
-from space import Orientation
-from action import RotateAction, Direction
-from cube import Cube
+from src.game_environment.space import Orientation
+from src.game_environment.action import RotateAction, Direction
+from src.game_environment.cube import Cube
 from simulator import Simulator
 
 

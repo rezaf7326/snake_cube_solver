@@ -11,7 +11,7 @@ class RotateAction:
     def __init__(self, direction, orientation, angle):
         self.orientation = orientation
         self.angle = angle
-        # to rotate from cube_index to end (forward) or from 0 to cube_index - 1 (backward)
+        # to rotate from cube_index to end (forward) or from 0 to cube_index (backward)
         self.direction = direction
 
     @staticmethod

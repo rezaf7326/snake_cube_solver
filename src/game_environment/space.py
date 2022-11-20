@@ -23,7 +23,6 @@ class Space3D:
         return self.cube_list
 
     def rotate_cubes_after_index(self, cube_index, orientation, angle):
-        # print("*********** called rotate_cubes_after_index ***********", cube_index, "***********")  # TODO REMOVE
         cube_list_ref = self.cube_list[cube_index:]
         Space3D.rotate_cubes(
             cube_list_ref,
@@ -33,7 +32,6 @@ class Space3D:
         )
 
     def rotate_cubes_before_index(self, cube_index, orientation, angle):
-        # print("*********** called rotate_cubes_before_index ***********", cube_index + 1, "***********")  # TODO REMOVE
         cube_list_ref = self.cube_list[:cube_index + 1]
         Space3D.rotate_cubes(
             cube_list_ref,
@@ -48,15 +46,10 @@ class Space3D:
     @staticmethod
     def rotate_cubes(cube_list, ref_cube, orientation, angle):
         ref_cube_copy = Cube(ref_cube.x, ref_cube.y, ref_cube.z)
-        # for c in cube_list:
-        #     print('initial coordinates', orientation, angle, c.x, c.y, c.z)  # TODO REMOVE
+
         math_utils.transform_to_coordinate(cube_list, ref_cube_copy)
-        # for c in cube_list:
-        #     print('coordinates after transform ', orientation, angle, c.x, c.y, c.z)  # TODO REMOVE
 
         Space3D.rotate(cube_list, orientation, angle)
-        # for c in cube_list:
-        #     print('coordinates after rotate around', c.x, c.y, c.z)  # TODO REMOVE
 
         # moving the cube_list to it`s original position
         math_utils.transform_to_coordinate(
@@ -67,8 +60,6 @@ class Space3D:
                 ref_cube_copy.z * -1,
             )
         )
-        # for c in cube_list:
-        #     print('coordinates after re-transform', c.x, c.y, c.z)  # TODO REMOVE
 
     @staticmethod
     def rotate(cube_list, orientation, angle):

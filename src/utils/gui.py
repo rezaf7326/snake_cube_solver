@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 
+
 def print_cube_list(cube_list):
     fig = plt.figure(figsize=(12, 12))
     ax = fig.add_subplot(projection='3d')
