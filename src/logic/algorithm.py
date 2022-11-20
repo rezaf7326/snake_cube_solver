@@ -9,20 +9,19 @@ class BFS:
         self.api = API()
 
     def search(self, game):
-        # queue is a list of pair of "game instance" & "action list"
         self.queue.append(game)
 
         # TODO remove
-        prev_head = 0
+        # prev_head = 0
 
         while self.queue:
             node = self.queue.pop(0)
 
             # TODO REMOVE
             print(node.get_head())
-            if prev_head != node.get_head():
-                prev_head = node.get_head()
-                node.print_space()
+            # if prev_head != node.get_head():
+            #     prev_head = node.get_head()
+            #     node.print_space()
 
             valid_actions = self.api.valid_actions(node)
 
@@ -32,6 +31,7 @@ class BFS:
                 child_node = self.api.copy_game(node)
                 self.api.evolve(child_node, action)
 
+                # TODO implement
                 # if self.is_visited(child_node):
                 #     continue
 
@@ -39,10 +39,14 @@ class BFS:
 
                 if self.api.is_victory(child_node):
                     print("BFS search successful.")
+                    child_node.print_space()
+                    return
 
+    # TODO implement
     # def is_visited(self, node):
     #     # implement
     #     for visited_node in self.visited:
     #         if self.api.is_space_match(visited_node, node):
     #             return True
     #     return False
+

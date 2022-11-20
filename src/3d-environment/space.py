@@ -1,8 +1,8 @@
 from enum import Enum
 from cube import Cube
-from gui import print_cube_list
+from src.utils.gui import print_cube_list
 import numpy as np
-import math_utils
+from src.utils import math_utils
 
 
 class Orientation(Enum):
@@ -23,7 +23,7 @@ class Space3D:
         return self.cube_list
 
     def rotate_cubes_after_index(self, cube_index, orientation, angle):
-        print("*********** called rotate_cubes_after_index ***********", cube_index, "***********")  # TODO REMOVE
+        # print("*********** called rotate_cubes_after_index ***********", cube_index, "***********")  # TODO REMOVE
         cube_list_ref = self.cube_list[cube_index:]
         Space3D.rotate_cubes(
             cube_list_ref,
@@ -33,7 +33,7 @@ class Space3D:
         )
 
     def rotate_cubes_before_index(self, cube_index, orientation, angle):
-        print("*********** called rotate_cubes_before_index ***********", cube_index + 1, "***********")  # TODO REMOVE
+        # print("*********** called rotate_cubes_before_index ***********", cube_index + 1, "***********")  # TODO REMOVE
         cube_list_ref = self.cube_list[:cube_index + 1]
         Space3D.rotate_cubes(
             cube_list_ref,
@@ -51,12 +51,12 @@ class Space3D:
         # for c in cube_list:
         #     print('initial coordinates', orientation, angle, c.x, c.y, c.z)  # TODO REMOVE
         math_utils.transform_to_coordinate(cube_list, ref_cube_copy)
-        for c in cube_list:
-            print('coordinates after transform ', orientation, angle, c.x, c.y, c.z)  # TODO REMOVE
+        # for c in cube_list:
+        #     print('coordinates after transform ', orientation, angle, c.x, c.y, c.z)  # TODO REMOVE
 
         Space3D.rotate(cube_list, orientation, angle)
-        for c in cube_list:
-            print('coordinates after rotate around', c.x, c.y, c.z)  # TODO REMOVE
+        # for c in cube_list:
+        #     print('coordinates after rotate around', c.x, c.y, c.z)  # TODO REMOVE
 
         # moving the cube_list to it`s original position
         math_utils.transform_to_coordinate(

@@ -37,29 +37,30 @@ class API:
         return game_copy
 
     @staticmethod
-    def is_victory(game):
+    def is_victory(game):  # TODO refactor
         cube_list = game.get_space().get_cube_list()
-        # I've chosen z axis(makes no difference to chose x or y) for testing operation
+        # I've chosen z axis(makes no difference to chose x or y) for goal-test operation
         min_z = 1_000_000_000
-        # min_z_cube_list must contain 9 cubes, otherwise they
-        #  are not in the same surface, thus not victory
-        min_z_cube_list = []
         for cube in cube_list:
             if cube.z < min_z:
                 min_z = cube.z
-            if cube.z == min_z:
-                min_z_cube_list.append(cube)
 
+        min_z_cube_list = [cube for cube in cube_list if cube.z == min_z]
         if len(min_z_cube_list) != 9:
             return False
+        min_z_cube_list_compliment_1 = [cube for cube in cube_list if cube.z == min_z + 1]
+        if len(min_z_cube_list_compliment_1) != 9:
+            return False
+        min_z_cube_list_compliment_2 = [cube for cube in cube_list if cube.z == min_z + 2]
+        if len(min_z_cube_list_compliment_2) != 9:
+            return False
 
-        min_z_cube_list_compliment = [cube for cube in cube_list if cube.z != min_z]
         for cube in min_z_cube_list:
             x = cube.x
             y = cube.y
             if not (
-                API.includes_cube(Cube(x, y, cube.z + 1), min_z_cube_list_compliment) or
-                API.includes_cube(Cube(x, y, cube.z + 2), min_z_cube_list_compliment)
+                    API.includes_cube(Cube(x, y, cube.z + 1), min_z_cube_list_compliment_1) or
+                    API.includes_cube(Cube(x, y, cube.z + 2), min_z_cube_list_compliment_2)
             ):
                 return False
 
@@ -85,21 +86,22 @@ class API:
         redundant_case_2 = False
         if API.is_stick_to_next(game, game.get_head()):
             last_sticky = API.last_sticky_in_chain(game)
-            game.set_head(last_sticky) # todo refactor: set_head should not be here!
+            game.set_head(last_sticky)  # todo refactor: set_head should not be here!
             redundant_case_2 = not API.is_corner(game)
 
         return redundant_case_1 or redundant_case_2
 
+    # TODO review method (commented repetitive actions)
     @staticmethod
     def get_corner_actions(game):
         direction = API.get_shorter_direction(game)
         next_orient = API.get_orientation(game, game.get_head(), game.get_head() + 1)
-        prev_orient = API.get_orientation(game, game.get_head() - 1, game.get_head())
+        # prev_orient = API.get_orientation(game, game.get_head() - 1, game.get_head())
 
         action_list = []
         for angle in RotateAction.valid_angles():
             action_list.append(RotateAction(direction, next_orient, angle))
-            action_list.append(RotateAction(direction, prev_orient, angle))
+            # action_list.append(RotateAction(direction, prev_orient, angle))
 
         return action_list
 
