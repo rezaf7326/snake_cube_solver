@@ -1,6 +1,6 @@
 import json
-from src.ai_logic.simulator import Simulator
-from src.ai_logic.algorithm import BFS
+from simulator import Simulator
+from algorithm import BFS
 
 
 class Agent:

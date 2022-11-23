@@ -1,8 +1,8 @@
 from enum import Enum
 from cube import Cube
-from src.utils.gui import print_cube_list
+from gui import print_cube_list
 import numpy as np
-from src.utils import math_utils
+import math_utils
 
 
 class Orientation(Enum):
