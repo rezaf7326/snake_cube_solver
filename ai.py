@@ -21,7 +21,7 @@ class Agent:
         sensor_data = json.loads(percept)
         # ^^^ DO NOT change the sensor_data above ***
 
-        game = Simulator(sensor_data["coordinates"], sensor_data["sticky_cubes"])
+        game = Simulator(sensor_data["coordinates"], sensor_data["sticky_cubes"], [])
 
         game.print_space() # TODO REMOVE
 

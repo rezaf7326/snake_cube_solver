@@ -39,7 +39,8 @@ class BFS:
 
                 if self.api.is_victory(child_node):
                     print("BFS search successful.")
-                    child_node.print_space()
+                    print(child_node.get_taken_actions_list())
+                    # child_node.print_space()
                     return
 
     # TODO implement

@@ -27,10 +27,13 @@ class API:
     @staticmethod
     def copy_game(game):
         coordinates_copy = []
+        taken_actions_copy = []
+        for taken_action in game.get_taken_actions_list():
+            taken_actions_copy.append([*taken_action])
         for coord in game.get_coordinates():
             coordinates_copy.append([*coord])
 
-        game_copy = Simulator(coordinates_copy, game.get_stickies())
+        game_copy = Simulator(coordinates_copy, game.get_stickies(), taken_actions_copy)
         game_copy.build_space()
         game_copy.set_head(game.get_head())
 
