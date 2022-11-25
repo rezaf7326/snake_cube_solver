@@ -14,38 +14,8 @@ class API:
     def evolve(game, action):
         game.take_action(action)
         game.add_taken_action(
-            API.parse_as_taken_action(game, action)
+            TestOnlyAPI.as_taken_action(game, action)
         )
-
-    @staticmethod
-    def parse_as_taken_action(game, action):
-        # taken_action is an array of
-        #   [
-        #       cube_index,
-        #       orientation_enum {0: x_axis, 1: y_axis, 2: z_axis},
-        #       angle_enum {-2: 180/-180deg, -1: 270/-90deg, 1: 90deg}
-        #   ]
-        taken_action = [game.get_head()]
-
-        match action.orientation:
-            case Orientation.x_axis:
-                taken_action.append(0)
-            case Orientation.y_axis:
-                taken_action.append(1)
-            case Orientation.z_axis:
-                taken_action.append(2)
-
-        deg_90 = RotateAction.valid_angles()[0]
-        deg_180 = RotateAction.valid_angles()[1]
-        deg_270 = RotateAction.valid_angles()[2]
-        if action.angle == deg_90:
-            taken_action.append(1)
-        if action.angle == deg_180:
-            taken_action.append(-2)
-        if action.angle == deg_270:
-            taken_action.append(-1)
-
-        return taken_action
 
     @staticmethod
     def valid_actions(game):
@@ -74,7 +44,7 @@ class API:
         return game_copy
 
     @staticmethod
-    def is_victory(game):  # TODO refactor
+    def is_victory(game):
         cube_list = game.get_space().get_cube_list()
         # I've chosen z axis(makes no difference to chose x or y) for goal-test operation
         min_z = 1_000_000_000
@@ -95,9 +65,9 @@ class API:
         for cube in min_z_cube_list:
             x = cube.x
             y = cube.y
-            if not (
-                    API.includes_cube(Cube(x, y, cube.z + 1), min_z_cube_list_compliment_1) or
-                    API.includes_cube(Cube(x, y, cube.z + 2), min_z_cube_list_compliment_2)
+            if (
+                not API.includes_cube(Cube(x, y, cube.z + 1), min_z_cube_list_compliment_1) or
+                not API.includes_cube(Cube(x, y, cube.z + 2), min_z_cube_list_compliment_2)
             ):
                 return False
 
@@ -128,17 +98,14 @@ class API:
 
         return redundant_case_1 or redundant_case_2
 
-    # TODO review method (commented repetitive actions)
     @staticmethod
     def get_corner_actions(game):
         direction = API.get_shorter_direction(game)
         next_orient = API.get_orientation(game, game.get_head(), game.get_head() + 1)
-        # prev_orient = API.get_orientation(game, game.get_head() - 1, game.get_head())
 
         action_list = []
         for angle in RotateAction.valid_angles():
             action_list.append(RotateAction(direction, next_orient, angle))
-            # action_list.append(RotateAction(direction, prev_orient, angle))
 
         return action_list
 
@@ -193,3 +160,40 @@ class API:
         if (len(cube_list) - 1) - game.get_head() > game.get_head():
             return Direction.backward
         return Direction.forward
+
+
+class TestOnlyAPI:
+    @staticmethod
+    def as_taken_action(game, action):
+        # taken_action is an array of
+        #   [
+        #       cube_index,
+        #       orientation_enum {0: x_axis, 1: y_axis, 2: z_axis},
+        #       angle_enum {-2: 180/-180deg, -1: 270/-90deg, 1: 90deg}
+        #   ]
+        return [
+            game.get_head(),
+            TestOnlyAPI.parse_orientation(action.orientation),
+            TestOnlyAPI.parse_angle(action.angle)
+        ]
+
+    @staticmethod
+    def parse_orientation(orientation):
+        if orientation == Orientation.x_axis:
+            return 0
+        if orientation == Orientation.y_axis:
+            return 1
+        if orientation == Orientation.z_axis:
+            return 2
+
+    @staticmethod
+    def parse_angle(angle):
+        deg_90 = RotateAction.valid_angles()[0]
+        deg_180 = RotateAction.valid_angles()[1]
+        deg_270 = RotateAction.valid_angles()[2]
+        if angle == deg_90:
+            return 1
+        if angle == deg_180:
+            return -2
+        if angle == deg_270:
+            return -1

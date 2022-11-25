@@ -4,27 +4,20 @@ from algorithm import BFS
 
 
 class Agent:
-    # ^^^ DO NOT change the name of the class ***
-
     def __init__(self):
         pass
 
-    # the act function takes a json string as input
-    # and outputs an action string
+    # the act function takes a json string as input and outputs a list of actions.
     # action example: [1,2,-2]
-    # the first number is the joint number (1: the first joint)
+    # the first number is the cube index (0: the first cube)
     # the second number is the axis number (0: x-axis, 1: y-axis, 2: z-axis)
-    # the third number is the degree (1: 90 degree, -2: -180 degree, -1: -90 degree)
-    def act(self, percept):  # TODO integrate with the new input/output
-        # ^^^ DO NOT change the act function above ***
-
+    # the third number is the degree (1: 90 degree, -2: -180/180 degree, -1: -90/270 degree)
+    def act(self, percept):
         sensor_data = json.loads(percept)
-        # ^^^ DO NOT change the sensor_data above ***
 
         game = Simulator(sensor_data["coordinates"], sensor_data["sticky_cubes"])
-        game.print_space() # TODO REMOVE
+
         algorithm = BFS()
         resolved_game = algorithm.search(game)
-        resolved_game.print_space() # TODO REMOVE
 
         return resolved_game.get_taken_actions_list()
