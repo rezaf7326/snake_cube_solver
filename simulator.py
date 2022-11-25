@@ -43,14 +43,12 @@ class Simulator:
                 action.orientation,
                 action.angle
             )
-            self.add_taken_action(action)
         else:
             self.space.rotate_cubes_after_index(
                 self.get_head(),
                 action.orientation,
                 action.angle
             )
-            self.add_taken_action(action)
 
     def move_to_next_head(self):
         self.head_index += 1
