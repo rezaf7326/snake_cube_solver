@@ -9,6 +9,7 @@ class Simulator:
         self.coordinates = coordinates
         self.sticky_cubes = sticky_cubes
         self.head_index = 0
+        self.taken_actions_list = []
 
     def build_space(self):
         for coord in self.coordinates:
@@ -17,6 +18,15 @@ class Simulator:
     def get_space(self):
         return self.space
 
+    def get_taken_actions_list(self):
+        return self.taken_actions_list
+
+    def set_taken_actions_list(self, taken_actions_list):
+        self.taken_actions_list = taken_actions_list
+
+    def add_taken_action(self, taken_action):
+        self.taken_actions_list.append(taken_action)
+
     def get_stickies(self):
         return self.sticky_cubes
 
@@ -24,8 +34,6 @@ class Simulator:
         return self.coordinates
 
     def print_space(self):
-        for cube in self.space.get_cube_list():  # TODO REMOVE this for loop
-            print([cube.x, cube.y, cube.z])
         self.space.print()
 
     def take_action(self, action):
@@ -35,12 +43,14 @@ class Simulator:
                 action.orientation,
                 action.angle
             )
+            self.add_taken_action(action)
         else:
             self.space.rotate_cubes_after_index(
                 self.get_head(),
                 action.orientation,
                 action.angle
             )
+            self.add_taken_action(action)
 
     def move_to_next_head(self):
         self.head_index += 1
