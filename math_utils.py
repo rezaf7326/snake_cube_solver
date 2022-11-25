@@ -3,21 +3,27 @@ from math import cos, sin, ceil, floor
 
 
 def rotation_matrix_x(theta):
-    return np.matrix([[1, 0, 0],
-                      [0, cos(theta), -sin(theta)],
-                      [0, sin(theta), cos(theta)]])
+    return np.matrix([
+        [1, 0, 0],
+        [0, cos(theta), -sin(theta)],
+        [0, sin(theta), cos(theta)]
+    ])
 
 
 def rotation_matrix_y(theta):
-    return np.matrix([[cos(theta), 0, sin(theta)],
-                      [0, 1, 0],
-                      [-sin(theta), 0, cos(theta)]])
+    return np.matrix([
+        [cos(theta), 0, sin(theta)],
+        [0, 1, 0],
+        [-sin(theta), 0, cos(theta)]
+    ])
 
 
 def rotation_matrix_z(theta):
-    return np.matrix([[cos(theta), -sin(theta), 0],
-                      [sin(theta), cos(theta), 0],
-                      [0, 0, 1]])
+    return np.matrix([
+        [cos(theta), -sin(theta), 0],
+        [sin(theta), cos(theta), 0],
+        [0, 0, 1]
+    ])
 
 
 def transform_to_coordinate(cube_list, ref_cube):

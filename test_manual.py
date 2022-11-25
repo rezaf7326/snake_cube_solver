@@ -16,8 +16,7 @@ selected_json = json2
 
 game = Simulator(
     selected_json.get("coordinates"),
-    selected_json.get("stick_together"),
-    []
+    selected_json.get("stick_together")
 )
 game.build_space()
 

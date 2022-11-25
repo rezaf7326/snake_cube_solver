@@ -47,11 +47,15 @@ class Space3D:
     def rotate_cubes(cube_list, ref_cube, orientation, angle):
         ref_cube_copy = Cube(ref_cube.x, ref_cube.y, ref_cube.z)
 
+        # moving the given cube_list to a position in space that will
+        #   place ref_cube at (0, 0, 0)
         math_utils.transform_to_coordinate(cube_list, ref_cube_copy)
 
         Space3D.rotate(cube_list, orientation, angle)
 
-        # moving the cube_list to it`s original position
+        # moving the cube_list to it`s original position having the rotation applied
+        #   note: at this point the ref_cube is still at (0, 0, 0) and with the
+        #   following transform it will be re-positioned at it`s initial position
         math_utils.transform_to_coordinate(
             cube_list,
             Cube(

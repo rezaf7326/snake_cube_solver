@@ -14,20 +14,17 @@ class Agent:
     # action example: [1,2,-2]
     # the first number is the joint number (1: the first joint)
     # the second number is the axis number (0: x-axis, 1: y-axis, 2: z-axis)
-    # the third number is the degree (1: 90 degree, -2: -180 degree, -1000: -90000 degree)
+    # the third number is the degree (1: 90 degree, -2: -180 degree, -1: -90 degree)
     def act(self, percept):  # TODO integrate with the new input/output
         # ^^^ DO NOT change the act function above ***
 
         sensor_data = json.loads(percept)
         # ^^^ DO NOT change the sensor_data above ***
 
-        game = Simulator(sensor_data["coordinates"], sensor_data["sticky_cubes"], [])
-
+        game = Simulator(sensor_data["coordinates"], sensor_data["sticky_cubes"])
         game.print_space() # TODO REMOVE
-
         algorithm = BFS()
-        updated_coordinates = algorithm.search(game)
+        resolved_game = algorithm.search(game)
+        resolved_game.print_space() # TODO REMOVE
 
-        game.print_space() # TODO REMOVE
-
-        return updated_coordinates
+        return resolved_game.get_taken_actions_list()

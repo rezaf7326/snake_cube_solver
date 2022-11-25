@@ -13,6 +13,39 @@ class API:
     @staticmethod
     def evolve(game, action):
         game.take_action(action)
+        game.add_taken_action(
+            API.parse_as_taken_action(game, action)
+        )
+
+    @staticmethod
+    def parse_as_taken_action(game, action):
+        # taken_action is an array of
+        #   [
+        #       cube_index,
+        #       orientation_enum {0: x_axis, 1: y_axis, 2: z_axis},
+        #       angle_enum {-2: 180/-180deg, -1: 270/-90deg, 1: 90deg}
+        #   ]
+        taken_action = [game.get_head()]
+
+        match action.orientation:
+            case Orientation.x_axis:
+                taken_action.append(0)
+            case Orientation.y_axis:
+                taken_action.append(1)
+            case Orientation.z_axis:
+                taken_action.append(2)
+
+        deg_90 = RotateAction.valid_angles()[0]
+        deg_180 = RotateAction.valid_angles()[1]
+        deg_270 = RotateAction.valid_angles()[2]
+        if action.angle == deg_90:
+            taken_action.append(1)
+        if action.angle == deg_180:
+            taken_action.append(-2)
+        if action.angle == deg_270:
+            taken_action.append(-1)
+
+        return taken_action
 
     @staticmethod
     def valid_actions(game):
@@ -33,9 +66,10 @@ class API:
         for coord in game.get_coordinates():
             coordinates_copy.append([*coord])
 
-        game_copy = Simulator(coordinates_copy, game.get_stickies(), taken_actions_copy)
-        game_copy.build_space()
+        game_copy = Simulator(coordinates_copy, game.get_stickies())
+        game_copy.set_taken_actions_list(taken_actions_copy)
         game_copy.set_head(game.get_head())
+        game_copy.build_space()
 
         return game_copy
 
