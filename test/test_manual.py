@@ -1,5 +1,5 @@
-from simulator import Simulator
-from algorithm import BFS
+from src.ai_login.simulator import Simulator
+from src.ai_login.algorithm import BFS
 
 json = {
     "coordinates": [[1, 1, 1], [1, 1, 0], [1, 0, 0], [0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 1, 2], [-1, 1, 2], [-1, 0, 2], [0, 0, 2], [0, -1, 2], [0, -1, 1], [0, -1, 0], [-1, -1, 0], [-2, -1, 0], [-2, -1, 1], [-1, -1, 1], [-1, -1, 2], [-2, -1, 2], [-2, 0, 2], [-2, 0, 1], [-1, 0, 1], [-1, 0, 0], [-2, 0, 0], [-2, 1, 0], [-2, 1, 1], [-2, 1, 2]],
@@ -62,7 +62,7 @@ json10 = {
 }
 
 
-selected_json = json10
+selected_json = json8
 
 game = Simulator(
     selected_json.get("coordinates"),

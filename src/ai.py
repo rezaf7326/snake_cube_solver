@@ -1,6 +1,6 @@
 import json
-from simulator import Simulator
-from algorithm import BFS
+from src.ai_login.simulator import Simulator
+from src.ai_login.algorithm import BFS
 
 
 class Agent:
