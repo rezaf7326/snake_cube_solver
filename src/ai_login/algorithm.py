@@ -1,4 +1,4 @@
-from api import API
+from src.ai_login.api import API
 import random
 
 
@@ -13,9 +13,6 @@ class BFS:
 
         while self.queue:
             node = self.queue.pop(0)
-
-            # TODO REMOVE
-            print(node.get_head())
 
             valid_actions = self.api.valid_actions(node)
 
